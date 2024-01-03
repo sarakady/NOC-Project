@@ -1,0 +1,4 @@
+module INPUT_PORTS #(parameter flit_width=16, MAX_Packet_NUM=8)
+
+
+endmodule

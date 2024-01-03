@@ -1,0 +1,105 @@
+module input_port #(parameter flit_width=16, MAX_Packet_NUM=8)
+(
+input    wire                        clk,
+input    wire                        rst,
+input    wire                        VALID,
+input    wire   [flit_width-1:0]     FLIT_i,
+input    wire                        VC_0_RESERVED,
+input    wire                        VC_1_RESERVED,
+input    wire                        VC_2_RESERVED,
+input    wire                        VC_3_RESERVED,
+input    wire                        VC_ANSWER,
+input    wire                        SW_ANSWER,
+input    wire                        ROUTE_DONE,
+input    wire   [3:0]                ROUTE_RESULT,
+output   wire                        ON_OFF_0,
+output   wire                        ON_OFF_1,
+output   wire                        ON_OFF_2,
+output   wire                        ON_OFF_3,
+output   wire   [flit_width-1:0]     FLIT_O, 
+output   wire    [3:0]               Route_info,
+output   wire                        Start_route,
+output   wire    [5:0]               Vc_request,
+output   wire                        valid_vc_req,
+output   wire    [3:0]               Sw_request,
+output   wire                        Valid_sw_req
+);
+
+///////////internal signals///////////////////////
+
+wire    [flit_width-1:0]    read_O;
+wire                        Arb_valid;
+wire    [1:0]               SEL_VC;
+wire    [1:0]               SELe_VC;
+wire                        VC_selected;
+wire                        ready;
+wire                        clear;
+wire                        EMBTY_FULL_0;
+wire                        EMBTY_FULL_1;
+wire                        EMBTY_FULL_2;
+wire                        EMBTY_FULL_3;
+
+
+
+////////////////instantiating///////////////////
+
+INPUT_BUFFERS UO(
+.clk(clk),           
+.rst(rst),
+.CLEAR(clear),         
+.valid(VALID),         
+.VC_NUM(SEL_VC),        
+.FLIT_i(FLIT_i),        
+.FLIT_O(FLIT_O),        
+.read_O(read_O),        
+.VC_0_Reserved(VC_0_RESERVED), 
+.ON_OFF_0(ON_OFF_0),      
+.EPT_FL_0(EMBTY_FULL_0),      
+.VC_1_Reserved(VC_1_RESERVED),
+.ON_OFF_1(ON_OFF_1),
+.EPT_FL_1(EMBTY_FULL_1),
+.VC_2_Reserved(VC_2_RESERVED),
+.ON_OFF_2(ON_OFF_2),
+.EPT_FL_2(EMBTY_FULL_2),
+.VC_3_Reserved(VC_3_RESERVED),
+.ON_OFF_3(ON_OFF_3),
+.EPT_FL_3(EMBTY_FULL_3));
+
+
+RR_ARBITER U1(
+.clk(clk),           
+.rst(rst),
+.EMBTY_FULL_0(EMBTY_FULL_0),
+.EMBTY_FULL_1(EMBTY_FULL_1),
+.EMBTY_FULL_2(EMBTY_FULL_2),
+.EMBTY_FULL_3(EMBTY_FULL_3),
+.Control_READY(ready),
+.VC_O_BUF(SEL_VC),
+.VC_O(SELe_VC),
+.selected(VC_selected),
+.VALID(Arb_valid));
+
+
+CONTROLLER U3(
+.clk(clk),          
+.rst(rst),
+.Arb_valid(Arb_valid),
+.SEL_VC(SELe_VC),
+.VC_selected(VC_selected),
+.read_O(read_O),
+.VC_ANSWER(VC_ANSWER),
+.SW_ANSWER(SW_ANSWER),
+.ROUTE_DONE(ROUTE_DONE),
+.DIRECTION(ROUTE_RESULT),
+.ready(ready),
+.Route_info(Route_info),
+.Start_route(Start_route),
+.Vc_request(Vc_request),
+.valid_vc_req(valid_vc_req),
+.Sw_request(Sw_request),
+.Valid_sw_req(Valid_sw_req),
+.clear(clear));
+
+
+
+endmodule
