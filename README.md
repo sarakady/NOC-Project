@@ -63,19 +63,20 @@ access to the crossbar switch.
     - By implementing a separable input-first allocator and thus sending control signals to the cross5 bar module and to the input buffers. 
     - And Round-Robin Arbiter to choose between the available output ports.
     
-<img src= "https://github.com/sarakady/NOC-Project/assets/113397553/e343a848-4d37-4e3a-a0bc-f3a3566aa70">
+<img src= "https://github.com/sarakady/NOC-Project/assets/113397553/0af82e84-b570-4876-a1eb-28efcc4b94c7">
 
 ## Round-Robin Arbiter for VC Allocator and switch Allocator
 
-<img srs= "https://github.com/sarakady/NOC-Project/assets/113397553/2d79366d-ab69-439e-9020-bb1a4772265c" >
+<img srs= "https://github.com/sarakady/NOC-Project/assets/113397553/b771d190-9aa2-4507-ab10-10ee8db41255" width="600" height="600">
 
 ## Crossbar 
 Cross bar module allows moving flits from input Block to output ports allowing only one input to propagate at a time. And input and output selection are done through switch allocator. 
 
-<img srs= "https://github.com/sarakady/NOC-Project/assets/113397553/b6cf183f-dd59-4466-bfef-a55120df1589" >
+<img srs= "https://github.com/sarakady/NOC-Project/assets/113397553/d8b72bb5-9f0a-4c25-baea-e03d24ad9b9c" width="500" height="500">
 
 
-  
+## for more details check the pdf in the link below: 
+[NOC_Project.pdf] (https://github.com/sarakady/NOC-Project/blob/main/NOC%20Project.pdf)
 
   
    
